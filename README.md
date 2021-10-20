@@ -1,6 +1,7 @@
 # Workshop at R/Pharma 2021 "Building Tidy R Packages"
 
 author: "Leigh Alexander | Juliane Manitz"
+
 date: "R/Pharma workshop | October 27, 2021"
 
 # Workshop Description
