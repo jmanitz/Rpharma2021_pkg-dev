@@ -1,4 +1,6 @@
-# Workshop at R/Pharma 2021 "Building Tidy R Packages"
+# "Building Tidy R Packages"
+
+Workshop at R/Pharma 2021
 
 author: "Leigh Alexander | Juliane Manitz"
 
