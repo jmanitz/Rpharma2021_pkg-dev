@@ -1,80 +1,27 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Building Tidy R Packages</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Leigh Alexander | Juliane Manitz" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: right, bottom, title-slide
+
+# Building Tidy R Packages
+### Leigh Alexander | Juliane Manitz
+### R/Pharma workshop | October 27, 2021
+
 ---
-title: "Building Tidy R Packages"
-#institute: "R/Pharma workshop 2021"
-author: "Leigh Alexander | Juliane Manitz"
-date: "R/Pharma workshop | October 27, 2021"
-output:
-  xaringan::moon_reader:
-    css: xaringan-themer.css
-    nature:
-      countIncrementalSlides: no
-      highlightStyle: github
-      titleSlideClass:
-       - right
-       - bottom
-    self_contained: no
-editor_options:
-  chunk_output_type: inline
----
 
-```{r setup, include=FALSE}
-#options(htmltools.dir.version = FALSE)
-knitr::opts_chunk$set(message = FALSE, warning = FALSE, cache = FALSE, 
-                      error = TRUE, dev = "cairo_pdf", fig.retina = 2)
 
-library(devtools)
-library(usethis)
-```
 
-```{r xaringan-themer, include=FALSE, warning=FALSE}
-library(xaringanthemer)
-#?style_mono_accent
 
-style_mono_accent(
-  base_color = "#1c5253", 
-  inverse_text_color = "#cbf7ed",
-)
 
-style_extra_css(
-  css = list(
-    ".inverse h4" = list(color = "orange"),
-    ".title-slide h1" = list(color = "orange")
-  ))
-```
 
-```{css, include=FALSE}
-/* custom.css */
-.big-left {
-  width: 60%;
-  height: 92%;
-  float: left;
-}
-.small-right {
-  width: 37%;
-  float: right;
-  padding-left: 1%;
-}
 
-.small-left {
-  width: 40%;
-  height: 92%;
-  float: left;
-}
-.big-right {
-  width: 57%;
-  float: right;
-  padding-left: 1%;
-}
-.remark-code {
-  font-size: 24px;
-}
-.small .remark-code { /*Change made here*/
-  font-size: 80% !important;
-}
-.tiny .remark-code { /*Change made here*/
-  font-size: 50% !important;
-}
-```
 
 # Workshop Description
 
@@ -105,9 +52,9 @@ add content about Juliane
 ---
 # Introductions: Who are you? 
 
-1. Experience with R: ranges [beginner <intermediate < advanced]
+1. Experience with R: ranges [beginner &lt;intermediate &lt; advanced]
 
-2. Experience with R Package development: ranges [novice < some experience]
+2. Experience with R Package development: ranges [novice &lt; some experience]
 
 3. Which topics are you most interested (choose 3)? 
   - Basic Package Structure
@@ -188,26 +135,44 @@ Basic R package components:
 
 The standard structure can be obtained automatically using `package.skeleton()`:
 
-```{r, echo=TRUE}
+
+```r
 # define some basic functions
-add <- function(x, y){ x + y }
-plusone <- function(x){ x + 1 }
+add &lt;- function(x, y){ x + y }
+plusone &lt;- function(x){ x + 1 }
 
 # test your source code
 add(10, 1)
+```
+
+```
+## [1] 11
+```
+
+```r
 plusone(4)
 ```
 
-```{r eval=FALSE}
+```
+## [1] 5
+```
+
+
+```r
 create_package("../example/myutils")
 usethis::use_r(add, plusone)
 ```
 
 ???
-```{r, eval=FALSE}
+
+```r
 # create standard structure
-fdlist <- c("add","plusone","dat")
+fdlist &lt;- c("add","plusone","dat")
 utils::package.skeleton("../example/myutils", fdlist, force=TRUE)
+```
+
+```
+## Error in utils::package.skeleton("../example/myutils", fdlist, force = TRUE): Malformed package name.
 ```
 
 ---
@@ -267,31 +232,74 @@ Basic R package components:
 
 The standard structure can be obtained automatically using `package.skeleton()`:
 
-```{r, echo=TRUE}
 
+```r
 # test your source code
 add(10, 1)
+```
+
+```
+## [1] 11
+```
+
+```r
 plusone(4)
+```
 
+```
+## [1] 5
+```
+
+```r
 # prepare some example data
-dat <- data.frame(id=1:10, x=rpois(10, 5), y=rpois(10, 5))
+dat &lt;- data.frame(id=1:10, x=rpois(10, 5), y=rpois(10, 5))
 
-x <- 1
-y <- 2
+x &lt;- 1
+y &lt;- 2
 use_data(x, y)
+```
 
+```
+## Error: `use_data()` is designed to work with packages.
+## Project 'Rpharma2021_pkg-dev' is not an R package.
+```
+
+```r
 # create standard structure
-fdlist <- c("add","plusone","dat")
+fdlist &lt;- c("add","plusone","dat")
 utils::package.skeleton("../example/myutils", fdlist, force=TRUE)
+```
+
+```
+## Error in utils::package.skeleton("../example/myutils", fdlist, force = TRUE): Malformed package name.
 ```
 
 ???
 
-``` {r}
+
+```r
 # test your source code
 add(10, 1)
+```
+
+```
+## [1] 11
+```
+
+```r
 plusone(4)
+```
+
+```
+## [1] 5
+```
+
+```r
 dat 
+```
+
+```
+## Error in gzfile(file, "wb"): cannot open the connection
 ```
 
 ---
@@ -319,7 +327,8 @@ Basic R package components:
 - R documentation format is very LaTeX-like output (LaTeX installation required)
 
 .small[
-```{r, eval=FALSE, echo=TRUE, size="small"}
+
+```r
 \name{add}
 \alias{add}
 \title{Add together two numbers}
@@ -365,7 +374,8 @@ Ctrl/Cmd + Shift + D (Keyboard Shortcut)
 - Untagged lines will be used to generate a title, description, and details section (in that order)
 
 .small[
-```{r, eval=FALSE, echo=TRUE}
+
+```r
 #' Add together two numbers.
 #'
 #' @param x A number.
@@ -374,7 +384,7 @@ Ctrl/Cmd + Shift + D (Keyboard Shortcut)
 #' @examples
 #' add(1, 1)
 #' @export
-add <- function(x, y) {
+add &lt;- function(x, y) {
  x + y
 }
 ```
@@ -395,7 +405,8 @@ add <- function(x, y) {
 - specifies which variables in the package should be **exported** to make them available to package users, and which variables
 should be **imported** from other packages
 
-``` {r eval=FALSE}
+
+```r
 # import all functions from packages foo and bar
 import(foo, bar) 
 # import selected functions f and g from foo
@@ -425,7 +436,8 @@ export(f, g)
 - roxygen tags like `@includes`, `@export`, `@importFrom` generate `NAMESPACE` und `Collate`
 
 - for packages with many variables to export it may be more convenient to specify the names to export with a regular expression
-```{r}
+
+```r
 #exportPattern("\^{}[\^{}\textbackslash\textbackslash.]")
 ```
 
@@ -459,7 +471,8 @@ and messages.
 every expectation. If you're using the terminal, it'll even
 colour the output.
 
-```{r echo=TRUE, eval=FALSE}
+
+```r
 library(testthat)
 library(yourpackage)
 
@@ -473,7 +486,8 @@ test_check("yourpackage")
 - `test_that` is grouping a number of expectation's for one functions or a feature
 - `context()` is grouping a number of content-related tests
 
-```{r echo=TRUE, eval=FALSE}
+
+```r
 require(testthat)
 test_that("trigonometric functions match identities", {
 expect_that(sin(pi / 4), equals(1 / sqrt(2)))
@@ -522,7 +536,8 @@ console:
 #Example: Build and Check myutils
 
 .small[
-``` {r, eval=FALSE, echo=TRUE}
+
+```r
 jmanitz@console$ R CMD build myutils_complete
 * checking for file `myutils_complete/DESCRIPTION' ... OK
 * preparing `myutils':
@@ -702,5 +717,108 @@ for pre-existing generic functions like `print()`, `summary()`, and `plot()`
     
 
 - roxygen tags like `@method`, `@importClassesFrom`, `@importMethodsFrom` are used for for OOP documentation
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"countIncrementalSlides": false,
+"highlightStyle": "github"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
 
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
 
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
