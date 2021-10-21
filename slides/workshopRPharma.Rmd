@@ -1,6 +1,5 @@
 ---
 title: "Building Tidy R Packages"
-#institute: "R/Pharma workshop 2021"
 author: "Leigh Alexander | Juliane Manitz"
 date: "R/Pharma workshop | October 27, 2021"
 output:
@@ -33,6 +32,7 @@ library(xaringanthemer)
 style_mono_accent(
   base_color = "#1c5253", 
   inverse_text_color = "#cbf7ed",
+  link_color = "orange"
 )
 
 style_extra_css(
@@ -76,6 +76,7 @@ style_extra_css(
 }
 ```
 
+class:inverse
 # Workshop Description
 
 **Why make an R package?** So many reasons! From sharing code and collaboration, to reproducibility and regulatory concerns, and finally for organizing you own analysis projects and tidy coding practices, R packages are here to help!
@@ -86,7 +87,7 @@ In this workshop, we will cover the very first steps of R package creation, the 
 -	document them with help pages, 
 -	integrate examples and data, 
 -	make sure that your code does what is expected by implementing unit testing, and 
--	finally built it and put it on CRAN or wherever you want to share it. 
+-	finally build it and put it on CRAN or wherever you want to share it. 
 
 We conclude the workshop with a selection of advanced topics related to R packages (e.g., package validation, objected-oriented programming/S3 methods or advanced package documentation with `pkgdown`). 
 
@@ -95,13 +96,20 @@ We conclude the workshop with a selection of advanced topics related to R packag
 ---
 # Introductions: Who are we? 
 
+---
+# Introductions
+
 .pull-left[
-add content about Leigh
+- Senior Bioinformatics Data Scientist @ SomaLogic
+- Lead, Model Infrastructure team
+- co-organizer, R-Ladies-Boulder
+- @exuberantleigh
 ]
 
 .pull-right[
 add content about Juliane
 ]
+
 ---
 # Introductions: Who are you? 
 
@@ -120,8 +128,214 @@ add content about Juliane
 4. What to you wanna use package development for? 
   - Personal use, 
   - internal company-use, 
-  - make it publically available
+  - make it publicly available
 
+---
+# What is Tidy? <img src="media/tidyverse.png" class="title-hex", width="100px", align="right">
+
+[Tidy Manifesto](https://tidyverse.tidyverse.org/articles/manifesto.html)
+
+### There are four basic principles to a tidy API:
+.pull-left[
+What they say:
+1. Reuse existing data structures.
+2. Compose simple functions with the pipe.
+3. Embrace functional programming.
+4. Design for humans.
+]
+
+.pull-right[
+What that means:
+1. Dataframes and vector are your friends!
+2. Keep your functions simple - do one thing and do it well.
+3. Write (and use) functions, change your life!
+4. Make it easy to read, understand, and use (tab complete)
+]
+
+---
+class: inverse, middle, center
+# Why would I want to make a package?
+*"Anything that can by automated, should be automated."*  
+Hadley Wickham & Jenny Bryan   
+
+---
+# Sharing code
+
+* Streamlines and standardizes code across teams/labs/collaborators
+* Reduces duplicative efforts
+* Highly portable
+* Easier to specify relative paths
+* "It works on my machine"
+
+---
+# Tools that enable reproducibility and testing
+
+.center[
+*"Packages are the fundamental units of reproducible R code."*  
+HW & JB
+]
+
+* Unit tests
+* Dependency management
+* R version/package version management
+
+---
+# Reusing my own functions
+
+## Rule of threes
+
+* If you copy and paste code 3 times, make it a function
+* If you re-use a function 3 times, make it a package
+
+---
+# Analysis project
+
+* Put an end to source("path/to/my/file")!
+* Use wrapper functions to create same plots across scripts/RMarkdown files
+    + multiple chapters in one document
+    + move from html, to Word, to Powerpoint
+
+---
+class: inverse
+# Resources
+
+.pull-left[
+## Package Dev
+- [r-pkg-book](https://r-pkgs.org/)  
+- [usethis](https://usethis.r-lib.org/)  
+- [usethis-workflow](https://www.hvitfeldt.me/blog/usethis-workflow-for-package-development/)  
+- [tidyverse-dev](https://usethis.r-lib.org/reference/tidyverse.html)  
+- [examples-on-github-forcats](https://github.com/tidyverse/forcats)  
+]
+
+.pull-right[
+## Writing functions
+- [r-4-data-science](https://r4ds.had.co.nz/functions.html)  
+- [advanced-r](https://adv-r.hadley.nz/functions.html)  
+]
+
+---
+class: center, middle, inverse
+# Package Structure
+
+---
+# Basic Package Structure
+
+.pull-left[
+- Code
+  - \R
+  - \tests
+- Documentation
+  - \man
+  - \vignettes
+- Package Guts
+  - DESCRIPTION
+  - NAMESPACE
+]
+
+.pull-right[
+![Package Directory](media/pkg-overview.png)
+]
+
+---
+# /R directory
+
+<img src="media/r-dir.png" class="title-hex", width="400px", align="right", padding-left:5%>
+- Where your functions live!
+- Rules of thumb:
+  - Either one function per file  
+  **or**  
+    A family of related functions  
+   
+- Includes individual `?function` documentation via [roxygen](https://roxygen2.r-lib.org/) comments
+
+---
+# Tidy Style
+
+pull-left[
+- Naming of functions is important
+  - verbs
+  - tab complete
+  - common prefixes
+]
+
+pull-right[
+include pic of family of functions
+]
+
+---
+# DESCRIPTION
+<img src="media/description-ex.png" class="title-hex", width="300px", align="right", padding-left:5%>
+- "Package metadata"
+- Required  
+
+#### What other functions/packages does your packages need?
+- **Imports: I need this package (or function from this package) to work**
+  - Installed, but not attached
+  - Best Practice: use `package::function` in your code to access seamlessly
+  
+- **Suggests: You can do a lot more cool stuff with my package, if you have this package**
+  - Not installed with your package
+  - Useful for external functions used in vignettes, testing, examples
+  - Nice way to reduce dependency nightmares
+
+
+
+---
+# NAMESPACE
+
+.pull-left[
+- Confusing, but part of what makes R packages highly portable
+- Determined by your `roxygen` comments in the R function files
+]
+
+.pull-right[
+![DESCRIPTION example](media/namespace-ex.png)
+]
+
+--- 
+# NAMESPACE
+.pull-left[
+- Imports/Exports
+]
+
+.pull-right[
+
+]
+
+---
+# NAMESPACE
+
+- Search path
+
+---
+# /data vs /data-raw
+
+.pull-left[
+#### data
+- Exported data that is "lazy loaded"
+- Cleaned versions of data
+- `usethis::use_data()` to save `.rdata` file
+]
+.pull-right[
+#### data-raw
+- .rds, .csv, or any data file
+- .R script that does the cleaning/manipulation
+- add to `.RBuildignore`
+]
+
+
+---
+# `devtools` and `usethis`
+
+.pull-left[
+knitr::
+[devtools](https://devtools.r-lib.org/)
+]
+<img src="media/usethis.png" class="title-hex", width="100px", align="right", padding-left:5%>
+---
+class: inverse, middle, center
+# Let's make a package!
 
 ---
 class: inverse
@@ -129,7 +343,7 @@ class: inverse
 
 Basic R package components: 
 
-- *DESCRIPTION* - What does the package? 
+- *DESCRIPTION* - What does the package do? 
 
 - *R/* - Start to write R functions, 
 
@@ -139,7 +353,7 @@ Basic R package components:
 
 - *tests/* - make sure that your code does what is expected by implementing unit testing, and 
 
-- finally built it and put it on CRAN or wherever you want to share it. 
+- finally build it and put it on CRAN or wherever you want to share it. 
 
 ---
 class: inverse
@@ -181,7 +395,7 @@ Basic R package components:
 3. Experiment in the console.
 4. Repeat
 
-*Tipp*: Ctrl/Cmd + Shift + L (keyboard shortcut) saves all open files then calls `load_all()`.
+*Tip*: Ctrl/Cmd + Shift + L (keyboard shortcut) saves all open files then calls `load_all()`.
 
 ---
 # Toy Example
