@@ -574,9 +574,8 @@ The standard structure can be obtained automatically using `package.skeleton()`:
 dat <- data.frame(id=1:10, x=rpois(10, 5), y=rpois(10, 5))
 
 # examples
-attach(dat)
-add(x,y)
-plusone(y)
+add(dat$x, dat$y)
+plusone(dat$y)
 
 # Save data in the package
 use_data(dat)
@@ -626,7 +625,6 @@ Basic R package components:
 }
 \description{ Add together two numbers }
 \examples{
-  add(1, 1)
   add(10, 1)
   
   data(dat)
@@ -655,26 +653,49 @@ Ctrl/Cmd + Shift + D (Keyboard Shortcut)
 ---
 # Documentation with roxygen
 
-- roxygen comments start with `#'`
-- Place comment lines directly above the code that defines the object documented.
-- tags like `@param`, `@return`, `@author` define specific sections in `.Rd` file
+- Roxygen comments start with `#'`
+
+- Place comment lines directly above the object that you want to document
+
+- Tags like `@param`, `@return`, `@author` define specific sections in `.Rd` file
+
 - Untagged lines will be used to generate a title, description, and details section (in that order)
 
-.small[
-```{r, eval=FALSE, echo=TRUE}
+---
+# Toy Example: Roxygen
+
+Document your function directly above your source code in `R/`:
+
+```
 #' Add together two numbers.
 #'
 #' @param x A number.
 #' @param y A number.
 #' @return The sum of \code{x} and \code{y}.
 #' @examples
-#' add(1, 1)
+#'   add(10, 1)
+#'
+#'   data(dat)
+#'   add(dat$x, dat$y)
 #' @export
 add <- function(x, y) {
- x + y
+  x + y
 }
 ```
-]
+
+---
+# Toy Example: Roxygen (cont.)
+
+Then, build documentation for the package
+
+``` {r}
+roxygenize()
+
+## i Loading myutils
+## Writing NAMESPACE
+## Writing add.Rd
+## Writing plusone.Rd
+```
 
 ???
 
