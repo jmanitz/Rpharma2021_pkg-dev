@@ -18,7 +18,7 @@ editor_options:
 
 ```{r setup, include=FALSE}
 #options(htmltools.dir.version = FALSE)
-knitr::opts_chunk$set(message = FALSE, warning = FALSE, cache = FALSE, 
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, cache = FALSE, eval = FALSE,  
                       error = TRUE, dev = "cairo_pdf", fig.retina = 2)
 
 library(devtools)
@@ -76,10 +76,23 @@ style_extra_css(
 }
 ```
 
-class:inverse
+class: inverse
 # Workshop Description
 
-**Why make an R package?** So many reasons! From sharing code and collaboration, to reproducibility and regulatory concerns, and finally for organizing you own analysis projects and tidy coding practices, R packages are here to help!
+#### Why make an R package? 
+
+So many reasons! From sharing code and collaboration, to reproducibility and regulatory concerns, and finally for organizing you own analysis projects and tidy coding practices, R packages are here to help!
+
+[...]
+
+#### Requirements:
+This workshop requires some experience with R and is targeted at beginner to intermediate R users
+
+---
+class: inverse
+# Workshop Description (cont.)
+
+#### Contents
 
 In this workshop, we will cover the very first steps of R package creation, the basic R package structure as well as all relevant components. 
 
@@ -91,7 +104,6 @@ In this workshop, we will cover the very first steps of R package creation, the 
 
 We conclude the workshop with a selection of advanced topics related to R packages (e.g., package validation, objected-oriented programming/S3 methods or advanced package documentation with `pkgdown`). 
 
-**Requirements:** This workshop requires some experience with R and is targeted at beginner to intermediate R users
 
 ---
 # Introductions: Who are we? 
@@ -339,9 +351,7 @@ class: inverse, middle, center
 
 ---
 class: inverse
-# Workshop Outline: Part II
-
-Basic R package components: 
+# Workshop Part II: Outline / Basic R package components:
 
 - *DESCRIPTION* - What does the package do? 
 
@@ -357,9 +367,64 @@ Basic R package components:
 
 ---
 class: inverse
-# Workshop Outline: Part II
+# Outline / Basic R package components: 
 
-Basic R package components: 
+- #### DESCRIPTION - What does the package? 
+
+- *R/* - Start to write R functions, 
+
+- *data/* - integrate examples and data, 
+
+- *man/* - document them with help pages, 
+
+- *tests/* - make sure that your code does what is expected by implementing unit testing, and 
+
+- finally built it and put it on CRAN or wherever you want to share it. 
+
+---
+# Toy Example: Getting started
+
+The standard structure can be obtained automatically using `usethis.create_package()`:
+
+```{r}
+create_package("../myutils", open = FALSE)
+
+## ../myutils/R     
+## ../myutils/DESCRIPTION   
+## ../myutils/NAMESPACE     
+## ../myutils/myutils.Rproj 
+```
+
+---
+# Toy Example: DESCRIPTION
+
+Then edit the `DESCRIPTION` file: 
+``` {r}
+setwd("../myutils")
+edit_file("DESCRIPTION")
+```
+
+``` 
+Package: myutils
+Type: Package
+Title: What the package does (short line)
+Version: 1.0
+Date: 2021-10-27
+Authors@R: 
+    person(given = "Juliane",
+           family = "Manitz",
+           role = c("aut", "cre"),
+           email = "juliane.manitz@emdserono.com")
+Maintainer: Who to complain to <yourfault@somewhere.net>
+Description: More about what it does (maybe more than one line)
+License: What license is it under?
+```
+
+---
+class: inverse
+# Workshop Part II: Outline
+
+#### Basic R package components: 
 
 - *DESCRIPTION* - What does the package? 
 
@@ -376,7 +441,7 @@ Basic R package components:
 ---
 # Write R functions
 
-- `R/` directory contains all R code
+- `R/` directory contains all R codehmm 
 - A package with just an `R/` directory is still a very useful package.
 
 --
@@ -391,38 +456,61 @@ Basic R package components:
 # Workflow to Integrate R code
 
 1. Edit your code.
+
 2. Load your code with one of `devtools::load_all()`, which re-loads all saved files in `R/` into memory.
+
 3. Experiment in the console.
+
 4. Repeat
 
-*Tip*: Ctrl/Cmd + Shift + L (keyboard shortcut) saves all open files then calls `load_all()`.
+<br> 
+
+*Pro Tip*: Ctrl/Cmd + Shift + L (keyboard shortcut) saves all open files then calls `load_all()`.
 
 ---
-# Toy Example
+# Toy Example: Write R code
 
-The standard structure can be obtained automatically using `package.skeleton()`:
+Define the function that should go into the package:
 
-```{r, echo=TRUE}
-# define some basic functions
+```{r, echo=TRUE, eval=TRUE}
+# Define some basic functions
 add <- function(x, y){ x + y }
 plusone <- function(x){ x + 1 }
 
-# test your source code
+# Test your source code
 add(10, 1)
 plusone(4)
+
+# Create and open R file:
+usethis::use_r("math")
 ```
 
-```{r eval=FALSE}
-create_package("../example/myutils")
-usethis::use_r(add, plusone)
+<!-- # create standard structure -->
+<!-- fdlist <- c("add","plusone","dat") -->
+<!-- utils::package.skeleton("../example/myutils", fdlist, force=TRUE) -->
+
+---
+# Respect the R landscape
+
+- If you want to usea a function from another package, define it as follows: 
+```
+foo <- function(...) pkgB::blah(...)
 ```
 
-???
-```{r, eval=FALSE}
-# create standard structure
-fdlist <- c("add","plusone","dat")
-utils::package.skeleton("../example/myutils", fdlist, force=TRUE)
-```
+- Don’t use `library()` or `require()`.
+
+- Never use `source()` to load code from a file
+
+- Be cautious with the use of the these functions (non-exhaustive list):
+    - `options()`
+    - `par()`
+    - `setwd()`
+    - `Sys.setenv()`
+    - `Sys.setlocale()`
+    - `set.seed()`
+
+<!-- You might be tempted to do this: foo <- pkgB::blah -->
+<!-- However, this will cause foo() in your package to reflect the definition of pkgB::blah() at the version present on the machine where the binary package is built (often CRAN), at that moment in time. If a bug is discovered in pkgB::blah() and subsequently fixed, your package will still use the older, buggy version, until your package is rebuilt (often by CRAN)  -->
 
 ---
 class: inverse
@@ -481,31 +569,22 @@ Basic R package components:
 
 The standard structure can be obtained automatically using `package.skeleton()`:
 
-```{r, echo=TRUE}
-
-# test your source code
-add(10, 1)
-plusone(4)
-
+```{r, echo=TRUE, eval=FALSE}
 # prepare some example data
 dat <- data.frame(id=1:10, x=rpois(10, 5), y=rpois(10, 5))
 
-x <- 1
-y <- 2
-use_data(x, y)
+# examples
+attach(dat)
+add(x,y)
+plusone(y)
 
-# create standard structure
-fdlist <- c("add","plusone","dat")
-utils::package.skeleton("../example/myutils", fdlist, force=TRUE)
-```
+# Save data in the package
+use_data(dat)
 
-???
-
-``` {r}
-# test your source code
-add(10, 1)
-plusone(4)
-dat 
+## √ Adding 'R' to Depends field in DESCRIPTION
+## √ Creating 'data/'
+## √ Saving 'dat' to 'data/dat.rda'
+## * Document your data (see 'https://r-pkgs.org/data.html')
 ```
 
 ---
@@ -549,6 +628,9 @@ Basic R package components:
 \examples{
   add(1, 1)
   add(10, 1)
+  
+  data(dat)
+  add(dat$x, dat$y)
 }
 ```
 ]
@@ -790,6 +872,23 @@ Status: OK
 R functions from `devtools` that simplify R packaging:
 
 
+
+---
+class: inverse
+# Workshop Description: Part III
+
+[...]
+
+We conclude the workshop with a selection of advanced topics related to R packages (e.g., package validation, objected-oriented programming/S3 methods or advanced package documentation with `pkgdown`). 
+
+--
+
+1. Advanced package documentation 
+
+2. Package validation 
+
+3. Objected-oriented programming with S3 methods 
+
 ---
 # Other Package Elements
 
@@ -808,22 +907,6 @@ Additional (optional) files in R packages:
 - `doc/` pkgdown
 - `inst/CITATION` how should the user cite the package?
 - `src/` C, C++, FORTRAN source code
-
----
-class: inverse
-# Workshop Description: Part III
-
-[...]
-
-We conclude the workshop with a selection of advanced topics related to R packages (e.g., package validation, objected-oriented programming/S3 methods or advanced package documentation with `pkgdown`). 
-
---
-
-1. Advanced package documentation 
-
-2. Package validation 
-
-3. Objected-oriented programming with S3 methods 
 
 ---
 class: inverse
@@ -906,15 +989,93 @@ R6: Encapsulated Classes with Reference Semantics
 Creates classes with reference semantics, similar to R's built-in reference classes. Compared to reference classes, R6 classes are simpler and lighter-weight, and they are not built on S4 classes so they do not require the methods package. These classes allow public and private members, and they support inheritance, even when the classes are defined in different packages.
 
 ---
-# Object-Oriented Progamming (OOP) using S3
+# OOP in S3: Classes
 
-- simple objects and methods 
+- Simple objects can be generated with proper structure
+```
+class(object) <- 'class name'
+```
+- constructor functions should be named like the class itself, e.g. `lm()` (with exception if a class is the return value of a
+number of functions)
 
-- computations are carried out via methods, a special type of function called a generic function decides which method to call,
+- you can test class using 
+```
+inherits(object, 'class name')
+```
 
-for pre-existing generic functions like `print()`, `summary()`, and `plot()`
-    
+- inheritance is defined by a vector of class names (children before parents)
+
+---
+# Toy Example: OOP Classes
+
+- How to find out the class?
+- how to define class?
+
+```
+plusone <- function(x){
+  y <- x+1
+  class(y) <- "math"
+}
+
+```
+
+---
+# OOP in S3: Methods
+
+- computations are carried out via methods that can be specific to object class
+
+- a special type of function called a generic function decides which method to call
+
+- list all methods associated with a certain object using `methods()`
+
+- standard methods should be supplied for most classes
+    - `print()`: basic object information, also when using `<RET>`
+    - `summary()`: more detailed description of the objects, and 
+    - `plot()`: graphics
+
+- every method should have the arguments of the corresponding generic (same order and defaults) and accept an arbitrary number of additional arguments (use `...`)
+
+---
+# Toy Example: OOP Methods
+
+- example print for numeric from plusone(x)
+- define  `print.math <- function() ...`
+- `print.math` is differnet from `print.numeric`
+
+---
+# OOP in S3: Documentation
+
+- ensure that the generics are imported and register the methods using `S3method` directives
+
+```
+# example myutils
+export(add)
+S3method(print, add)
+export(plusone)
+S3method(print, plusone)
+.
+.
+```
+
+- the function `print.foo` does not need to be exported
+
 
 - roxygen tags like `@method`, `@importClassesFrom`, `@importMethodsFrom` are used for for OOP documentation
 
+---
+# Toy Example: OOP Documentation
+
+
+Toy example or real-world example 
+
+
+---
+class: inverse, center, middle 
+# Stay-at-Home Message
+
+#### Everyone can make R packages! 
+
+What is your next project? 
+
+Let's get started!
 
