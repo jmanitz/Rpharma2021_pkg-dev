@@ -35,6 +35,10 @@ style_mono_accent(
   link_color = "orange"
 )
 
+# style_mono_accent_inverse(
+#   link_color = "orange"
+# )
+
 style_extra_css(
   css = list(
     ".inverse h4" = list(color = "orange"),
@@ -108,14 +112,13 @@ We conclude the workshop with a selection of advanced topics related to R packag
 ---
 # Introductions: Who are we? 
 
----
-# Introductions
-
 .pull-left[
 - Senior Bioinformatics Data Scientist @ SomaLogic
 - Lead, Model Infrastructure team
 - co-organizer, R-Ladies-Boulder
-- @exuberantleigh
+- @exuberantleigh  
+  
+<img src="media/twit.JPG", width="350px", align="left">
 ]
 
 .pull-right[
@@ -199,6 +202,10 @@ HW & JB
 * If you copy and paste code 3 times, make it a function
 * If you re-use a function 3 times, make it a package
 
+```{r, results="asis"}
+hist(mtcars$mpg)
+```
+
 ---
 # Analysis project
 
@@ -264,14 +271,14 @@ class: center, middle, inverse
 ---
 # Tidy Style
 
-pull-left[
+.pull-left[
 - Naming of functions is important
   - verbs
   - tab complete
   - common prefixes
 ]
 
-pull-right[
+.pull-right[
 include pic of family of functions
 ]
 
@@ -282,7 +289,7 @@ include pic of family of functions
 - Required  
 
 #### What other functions/packages does your packages need?
-- **Imports: I need this package (or function from this package) to work**
+- **Imports/Depends: I need this package (or function from this package) to work**
   - Installed, but not attached
   - Best Practice: use `package::function` in your code to access seamlessly
   
@@ -291,34 +298,36 @@ include pic of family of functions
   - Useful for external functions used in vignettes, testing, examples
   - Nice way to reduce dependency nightmares
 
-
-
 ---
 # NAMESPACE
 
 .pull-left[
-- Confusing, but part of what makes R packages highly portable
+- Confusing, but part of what makes R packages **self-contained** and **highly portable**
 - Determined by your `roxygen` comments in the R function files
+- Avoid conflicts among functions in other packages
+
 ]
 
 .pull-right[
 ![DESCRIPTION example](media/namespace-ex.png)
 ]
 
---- 
-# NAMESPACE
-.pull-left[
-- Imports/Exports
-]
-
-.pull-right[
-
-]
-
 ---
 # NAMESPACE
 
-- Search path
+.pull-left[
+- Makes use of functions **explicit**
+- Imports
+  - How your package accesses functions from other packages
+  - `package::function()`
+- Exports
+  - What is visible to the user
+  - How your a function in your packages is explicitly accessed
+]
+
+.pull-right[
+![](media/art-vandelay.jpg)
+]
 
 ---
 # /data vs /data-raw
@@ -338,16 +347,28 @@ include pic of family of functions
 
 
 ---
-# `devtools` and `usethis`
+# `usethis` and `devtools`
 
 .pull-left[
-knitr::
-[devtools](https://devtools.r-lib.org/)
+[link to site](https://usethis.r-lib.org/index.html)
+  
+<img src="media/usethis.png" class="title-hex", width="300px", align="left", padding-left:5%>
 ]
-<img src="media/usethis.png" class="title-hex", width="100px", align="right", padding-left:5%>
+
+.pull-left[
+[link to site](https://devtools.r-lib.org/)
+  
+<img src="media/devtools.png" class="title-hex", width="300px", align="right", padding-left:5%>
+
+]
+
+
+
 ---
 class: inverse, middle, center
 # Let's make a package!
+
+exercises/02-create-package.R
 
 ---
 class: inverse
@@ -930,34 +951,93 @@ Additional (optional) files in R packages:
 - `src/` C, C++, FORTRAN source code
 
 ---
-class: inverse
-# Advanced Documentation [Leigh]
-
-5 slides = 10mins
-
----
+class: inverse, middle, center
 # Advanced Documentation
-
-- vignettes
-- websites
 
 ---
 # Vignettes
 
-- A vignette is a long-form guide to your package like a book chapter or an academic paper. 
+- A vignette is a practical long-form guide to your package
+  - How to use groups of functions **together**
+  - Now implemented in `rmarkdown` making our lives easier
 
 - When writing a vignette, you’re teaching someone how to use your package.
 
 - Data for vignettes: If you want to show how to work with an already loaded dataset, put that data in data/. If you want to show how to load raw data, put that data in inst/extdata. 
 
-???
-
-Function documentation is great if you know the name of the function you need, but it’s useless otherwise.
+- `browse_vignettes("packagename")`
 
 ---
-# pkgdown
+# Vignettes
 
-- websites, 
+- yaml
+- `rmarkdown`
+  - code
+  - formatting
+
+```{yaml}
+---
+title: "Vignette Title"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+```
+
+
+---
+# `pkgdown`
+
+- Make a website for your package!
+- [pkgdown site for pkgdown](https://pkgdown.r-lib.org/)
+
+<img src="media/usethis.png", width="300px", align="center", padding-left:5%>  
+
+---
+# `pkgdown` elements
+- Website appearance and construction
+  - `_pkgdown.yml`  
+  
+```{yaml}
+home:
+  title: An R package for pool-noodle discovery
+  description: Discover and add pool-noodles to your growing collection.
+  
+template:
+  opengraph:
+    image:
+      src: man/figures/card.png
+      alt: "Pool noodles configured to form the word poolnoodlr"
+    twitter:
+      creator: "@hadleywickham"
+      site: "@rstudio"
+      card: summary_large_image
+
+```
+  
+---
+#`pkgdown` elements
+
+- **Home page**  
+  - `README.md` or `index.md`
+  
+- **Reference page**
+ - list of functions
+ - generated from function documentation/`roxygen`
+ - **Advanced:** group functions via `_pkgdown.yml`
+ 
+- **Articles**
+  - generated from vignettes
+  - written to `articles` directory
+  
+- **Release notes**
+  - `news.md`
+
+[example pkgdown output](https://pkgdown.r-lib.org/index.html)  
+[example pkgdown guts]()
+
 
 ---
 class: inverse
