@@ -121,7 +121,7 @@ We conclude the workshop with a selection of advanced topics related to R packag
 - Senior Bioinformatics Data Scientist @ SomaLogic
 - Lead, Model Infrastructure team
 - co-organizer, R-Ladies-Boulder
-- @exuberantleigh  
+- <img src="media/twitter.png", width="25px", align="left">@exuberantleigh  
   
 <img src="media/twit.JPG", width="350px", align="left">
 ]
@@ -189,12 +189,13 @@ Hadley Wickham & Jenny Bryan
 * Reduces duplicative efforts
 * Highly portable
 * Easier to specify relative paths
-* "It works on my machine" `r emo::ji("fire")`
+* "It works on my machine" `# r emo::ji("fire")`
 ]
 
 .pull-right[
 ![](media/sharing.jpg)
 ]
+
 ---
 # Tools that enable reproducibility and testing
 
@@ -202,30 +203,33 @@ Hadley Wickham & Jenny Bryan
 *"Packages are the fundamental units of reproducible R code."*  
 HW & JB
 ]
-
+.pull-left[
 * Unit tests
 * Dependency management
 * R version/package version management
-
+]
+.pull-right[
+![](media/twins.jpg)
+]
 ---
 # Reusing my own functions
 
 ## Rule of threes
-
+.pull-left[
 * If you copy and paste code 3 times, make it a function
 * If you re-use a function 3 times, make it a package
+]
+.pull-right[
+![From School House Rock](media/three.jpg)
 
-```{r, results="asis"}
-hist(mtcars$mpg)
-```
-
+]
 ---
 # Analysis project
 
-* Put an end to source("path/to/my/file")!
+* Put an end to source("path/to/my/file")! `#r emo:ji("exploding-head)`
 * Use wrapper functions to create same plots across scripts/RMarkdown files
     + multiple chapters in one document
-    + move from html, to Word, to Powerpoint
+    + move seemlessly from html, to Word, to Powerpoint
 
 ---
 class: inverse
@@ -292,7 +296,7 @@ class: center, middle, inverse
 ]
 
 .pull-right[
-include pic of family of functions
+![](media/prefix.png)
 ]
 
 ---
