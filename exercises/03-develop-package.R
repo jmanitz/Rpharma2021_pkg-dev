@@ -9,8 +9,12 @@ require(devtools)
 
 create_package("../../myutils", open = TRUE)
 
+# Edit package Description
 edit_file("DESCRIPTION")
+
+# Adds license
 use_gpl3_license()
+
 # --- I have a package structure, now what? ------------------------------------
 
 # --- Write R code -------------------------------------------------------------
@@ -59,7 +63,6 @@ use_data(dat)
 #   data(dat)
 #   add(dat$x, dat$y)
 # }
-
 
 ## roxygen2
 
