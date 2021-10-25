@@ -48,40 +48,6 @@ style_extra_css(
   ))
 ```
 
-```{css, include=FALSE}
-/* custom.css */
-.big-left {
-  width: 60%;
-  height: 92%;
-  float: left;
-}
-.small-right {
-  width: 37%;
-  float: right;
-  padding-left: 1%;
-}
-
-.small-left {
-  width: 40%;
-  height: 92%;
-  float: left;
-}
-.big-right {
-  width: 57%;
-  float: right;
-  padding-left: 1%;
-}
-.remark-code {
-  font-size: 24px;
-}
-.small .remark-code { /*Change made here*/
-  font-size: 80% !important;
-}
-.tiny .remark-code { /*Change made here*/
-  font-size: 50% !important;
-}
-```
-
 class: inverse
 # Workshop Description
 
@@ -758,7 +724,7 @@ importFrom(foo, f, g)
 ```
 
 ---
-# Create NAMESPACE with roxygen 
+# Create NAMESPACE using roxygen 
 
 - Export functions for users by placing `@export` in the roxygen comments
 
@@ -1051,12 +1017,6 @@ Status: OK
 - `build()`, `build_win()` builds a package file from package sources (only one R version)
 
 ---
-# Toy Example: Build and Check
-
-R functions from `devtools` that simplify R packaging:
-
-
----
 class: inverse
 # Workshop Description: Part III
 
@@ -1258,7 +1218,9 @@ ICH: “… **should be reliable**, and documentation of **appropriate software 
     
     - Implement good maintainance practice like bug url, NEWS file, ...
     
-    - Resolve bugs 
+    - Good and informative documentation
+    
+    - Resolve bugs and be a responsive maintainer
     
 --
 
@@ -1276,9 +1238,10 @@ ICH: “… **should be reliable**, and documentation of **appropriate software 
   
 ---
 class: inverse, center, middle
-# Object-Oriented Progamming (OOP) [Leigh/Juliane]
+# Object-Oriented Progamming (OOP) 
 
-10slides 20min
+<!-- [Leigh/Juliane] -->
+<!-- 10slides 20min -->
 
 ---
 # Object-Oriented Progamming 
@@ -1336,20 +1299,6 @@ inherits(object, 'class name')
 - inheritance is defined by a vector of class names (children before parents)
 
 ---
-# Toy Example: OOP Classes
-
-- How to find out the class?
-- how to define class?
-
-```
-plusone <- function(x){
-  y <- x+1
-  class(y) <- "math"
-}
-
-```
-
----
 # OOP in S3: Methods
 
 - computations are carried out via methods that can be specific to object class
@@ -1364,13 +1313,6 @@ plusone <- function(x){
     - `plot()`: graphics
 
 - every method should have the arguments of the corresponding generic (same order and defaults) and accept an arbitrary number of additional arguments (use `...`)
-
----
-# Toy Example: OOP Methods
-
-- example print for numeric from plusone(x)
-- define  `print.math <- function() ...`
-- `print.math` is differnet from `print.numeric`
 
 ---
 # OOP in S3: Documentation
@@ -1393,10 +1335,8 @@ S3method(print, plusone)
 - roxygen tags like `@method`, `@importClassesFrom`, `@importMethodsFrom` are used for for OOP documentation
 
 ---
-# Toy Example: OOP Documentation
-
-
-Toy example or real-world example 
+class: inverse, middle, center
+# Hands-on Object-Oriented Programming
 
 
 ---
