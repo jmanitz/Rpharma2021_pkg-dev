@@ -10,7 +10,7 @@ require(devtools)
 create_package("../../myutils", open = TRUE)
 
 edit_file("DESCRIPTION")
-
+use_gpl3_license()
 # --- I have a package structure, now what? ------------------------------------
 
 # --- Write R code -------------------------------------------------------------
@@ -96,26 +96,54 @@ edit_file("NAMESPACE")
 
 # --- Unit Testing -------------------------------------------------------------
 
+# Create test file for math functions
 use_test("math")
 
-require(testthat)
+### testthat.R
+# library(testthat)
+# library(myutils)
+#
+# test_check("myutils")
 
-test_check("myutils")
+### Adding tests: functions in math.R are correct ###
 
+test_that("simple tests", {
+  expect_equal(add(10, 1), 11)
+  expect_equal(plusone(4), 5)
+})
 
-# --- Tools to manage your DESCRIPTION and NAMESPACE ---------------------------
-use_package("dplyr")
-use_package("here", type = "Suggests")
-use_pipe()
-use_tibble()
+test_that("tests using data frames", {
+  dat$z <- dat$x + dat$y
+  expect_equal(add(dat$x, dat$y), dat$z)
+  expect_equal(add(dat$y, 1), plusone(dat$y))
+})
+
+test_that("error handling", {
+  expect_error(add("a",5))
+  expect_error(plusone("a"))
+})
 
 # --- I have a package with functions, now what? -------------------------------
 
-# largely from `devtools`
-check()    # cmd + shift + e
-test()     # cmd + shift + t
-document() # cmd + shift + d
-# load_all, unlike source, functions/data are not dumped to your global environment
+# simulate installing and reloading your package
 load_all() # cmd + shift + L
-install()
-# install.packages("path/to/package/folder", repos = NULL, type = "source")
+
+# update documentation, file collation and NAMESPACE.
+document() # cmd + shift + d
+
+# run most of the documentation checking components of R CMD check
+check_man()
+
+# make sure all examples work.
+run_examples()
+
+# reloads your code, then runs all testthat tests.
+test()     # cmd + shift + t
+
+# update the documentation, then builds and checks the package
+check()    # cmd + shift + e
+
+# build the package from package sources (only one R version)
+build()
+
+install() # install.packages("path/to/package/folder", repos = NULL, type = "source")
