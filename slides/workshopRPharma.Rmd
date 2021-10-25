@@ -34,12 +34,15 @@ library(xaringanthemer)
 style_mono_accent(
   base_color = "#1c5253", 
   inverse_text_color = "#cbf7ed",
-  link_color = "orange"
+  link_color = "orange",
+  header_h2_font_size = "2rem",
+  link_decoration = "underline"
 )
 
-# style_mono_accent_inverse(
-#   link_color = "orange"
-# )
+style_mono_accent_inverse(
+  link_color = "orange",
+  code_inline_color = "orange"
+)
 
 style_extra_css(
   css = list(
@@ -146,7 +149,7 @@ We conclude the workshop with a selection of advanced topics related to R packag
   - Package validation, 
   - Object orientated programming in R
 
-4. What to you wanna use package development for? 
+4. What do you want use package development for? 
   - Personal use, 
   - internal company-use, 
   - make it publicly available
@@ -181,13 +184,17 @@ Hadley Wickham & Jenny Bryan
 
 ---
 # Sharing code
-
+.pull-left[
 * Streamlines and standardizes code across teams/labs/collaborators
 * Reduces duplicative efforts
 * Highly portable
 * Easier to specify relative paths
-* "It works on my machine"
+* "It works on my machine" `r emo::ji("fire")`
+]
 
+.pull-right[
+![](media/sharing.jpg)
+]
 ---
 # Tools that enable reproducibility and testing
 
