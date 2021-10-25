@@ -1170,17 +1170,101 @@ template:
 
 
 ---
-class: inverse
-# Package validation [Juliane]
+class: inverse, center, middle
+# Package validation 
 
-(topic introduction: 3 slides + references)
-5-10mins
-
----
-
+&lt;!-- [Juliane] --&gt;
+&lt;!-- (topic introduction: 3 slides + references) --&gt;
+&lt;!-- 5-10mins --&gt;
 
 ---
-class: inverse
+# What is your Actual Question? 
+
+**Is the package validated?**
+
+--
+
+**Is the software reliable?**
+
+--
+
+**Why should you trust my software output?**
+
+--
+
+&lt;br&gt;
+
+ICH E9 Guideline states:
+
+&gt; #### 5.8 Integrity of Data and Computer Software Validity
+&gt; The credibility of the numerical results of the analysis depends on the **quality and validity of the methods and software** [..] The computer software used for data management and statistical analysis should be **reliable**, and **documentation of appropriate software testing procedures** should be available. 
+
+???
+
+ICH: “… **should be reliable**, and documentation of **appropriate software testing procedures** should be available”
+
+‘Validation’ isn’t actually mentioned.
+
+---
+# Assessment of Reliable Software
+
+- "I know the actual answer"
+
+--
+
+- "It’s in the ballpark of what I might expect to see"
+
+--
+
+- "I’ve used the software before and it did what I expected"
+
+--
+
+- "Many others use the software and it does what they expect"
+
+--
+
+- "When I learnt statistics, I was taught using the software"
+
+--
+
+- "The software is used/cited in statistical literature"
+
+--
+
+- "I trust that the software owner develops it using best practice"
+
+--
+
+- "The software owner provides tests that I can use to verify that it is working"
+
+---
+# Improve Trustworthiness
+
+- Create transparency of software development
+    
+    - Make it a public github project 
+    
+    - Implement good maintainance practice like bug url, NEWS file, ...
+    
+    - Resolve bugs 
+    
+--
+
+- Provide thorough testing coverage
+
+    - Reference test cases to standard text books, or peer reviewed papers
+
+--
+
+- Consider using integration with `valtools` (*R/Pharma workshop Nov 5*):
+
+  - define requirements: record expectations, goals and risks of the project
+  
+  - combines implementation, test cases etc in a validation report 
+  
+---
+class: inverse, center, middle
 # Object-Oriented Progamming (OOP) [Leigh/Juliane]
 
 10slides 20min
