@@ -26,6 +26,7 @@ add <- function(x, y) {
 #'
 #' data(dat)
 #' plusone(dat$y)
+#' @export
 plusone <- function(x){
   x + 1
 }

@@ -74,17 +74,34 @@ use_data(dat)
 #'
 #'   data(dat)
 #'   add(dat$x, dat$y)
-#' @export
 add <- function(x, y) {
   x + y
 }
 
+# Convert roxygen comments
 roxygenize()
-getwd()
+# Preview documentation
+?add
+
+### NAMESPACE
+
+# Add `@export` to roxygen comments
+#' @export
+
+# Compile documentation
+roxygenize()
+
+# View namespace
+edit_file("NAMESPACE")
 
 # --- Unit Testing -------------------------------------------------------------
 
-use_test("my_func")
+use_test("math")
+
+require(testthat)
+
+test_check("myutils")
+
 
 # --- Tools to manage your DESCRIPTION and NAMESPACE ---------------------------
 use_package("dplyr")
