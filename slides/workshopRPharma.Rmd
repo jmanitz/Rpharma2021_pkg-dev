@@ -144,7 +144,7 @@ We conclude the workshop with a selection of advanced topics related to R packag
   - Package validation, 
   - Object orientated programming in R
 
-4. What to you wanna use package development for? 
+4. What to you want use package development for? 
   - Personal use, 
   - internal company-use, 
   - make it publicly available
@@ -165,7 +165,7 @@ What they say:
 
 .pull-right[
 What that means:
-1. Dataframes and vector are your friends!
+1. Dataframes and vectors are your friends!
 2. Keep your functions simple - do one thing and do it well.
 3. Write (and use) functions, change your life!
 4. Make it easy to read, understand, and use (tab complete)
@@ -205,10 +205,6 @@ HW & JB
 
 * If you copy and paste code 3 times, make it a function
 * If you re-use a function 3 times, make it a package
-
-```{r, results="asis"}
-hist(mtcars$mpg)
-```
 
 ---
 # Analysis project
@@ -407,7 +403,7 @@ class: inverse
 ---
 # Toy Example: Getting started
 
-The standard structure can be obtained automatically using `usethis.create_package()`:
+The standard structure can be obtained automatically using `usethis::create_package()`:
 
 ```{r}
 create_package("../myutils", open = FALSE)
@@ -423,7 +419,6 @@ create_package("../myutils", open = FALSE)
 
 Then edit the `DESCRIPTION` file: 
 ``` {r}
-setwd("../myutils")
 edit_file("DESCRIPTION")
 ```
 
@@ -464,7 +459,7 @@ class: inverse
 ---
 # Write R functions
 
-- `R/` directory contains all R codehmm 
+- `R/` directory contains all R code
 - A package with just an `R/` directory is still a very useful package.
 
 --
