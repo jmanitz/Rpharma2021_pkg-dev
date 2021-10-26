@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ---
 title: "Building Tidy R Packages"
 author: "Leigh Alexander | Juliane Manitz"
@@ -150,12 +151,17 @@ Hadley Wickham & Jenny Bryan
 
 ---
 # Sharing code
-
+.pull-left[
 * Streamlines and standardizes code across teams/labs/collaborators
 * Reduces duplicative efforts
 * Highly portable
 * Easier to specify relative paths
-* "It works on my machine"
+* "It works on my machine" `# r emo::ji("fire")`
+]
+
+.pull-right[
+!["https://www.zerotothree.org/resources/1964-helping-young-children-with-sharing"](media/sharing.jpg)
+]
 
 ---
 # Tools that enable reproducibility and testing
@@ -164,30 +170,33 @@ Hadley Wickham & Jenny Bryan
 *"Packages are the fundamental units of reproducible R code."*  
 HW & JB
 ]
-
+.pull-left[
 * Unit tests
 * Dependency management
 * R version/package version management
-
+]
+.pull-right[
+![](media/twins.jpg)
+]
 ---
 # Reusing my own functions
 
 ## Rule of threes
-
+.pull-left[
 * If you copy and paste code 3 times, make it a function
 * If you re-use a function 3 times, make it a package
-
-```{r, results="asis"}
-hist(mtcars$mpg)
-```
+]
+.pull-right[
+![From School House Rock](media/three.jpg)
+]
 
 ---
 # Analysis project
 
-* Put an end to source("path/to/my/file")!
+* Put an end to source("path/to/my/file")! `#r emo:ji("exploding-head)`
 * Use wrapper functions to create same plots across scripts/RMarkdown files
     + multiple chapters in one document
-    + move from html, to Word, to Powerpoint
+    + move seamlessly from html, to Word, to Powerpoint
 
 ---
 class: inverse
@@ -254,7 +263,7 @@ class: center, middle, inverse
 ]
 
 .pull-right[
-include pic of family of functions
+![](media/prefix.png)
 ]
 
 ---
@@ -284,7 +293,7 @@ include pic of family of functions
 ]
 
 .pull-right[
-![DESCRIPTION example](media/namespace-ex.png)
+![namesspace example](media/namespace-ex.png)
 ]
 
 ---
@@ -1122,7 +1131,7 @@ template:
 ```
   
 ---
-#`pkgdown` elements
+# `pkgdown` elements
 
 - **Home page**  
   - `README.md` or `index.md`
@@ -1351,4 +1360,3 @@ class: inverse, center, middle
 What is your next project? 
 
 Let's get started!
-
