@@ -12,6 +12,9 @@ output:
        - right
        - bottom
     self_contained: no
+    yolo: 
+      img: media/cat.jpeg
+      times: 10
 editor_options:
   chunk_output_type: inline
 ---
