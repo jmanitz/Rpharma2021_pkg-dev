@@ -97,6 +97,7 @@ test_that("error handling", {
 })
 
 # --- I have a package with functions, now what? -------------------------------
+rm(list = c("add", "plusone"))
 
 # simulate installing and reloading your package
 load_all() # cmd + shift + L
