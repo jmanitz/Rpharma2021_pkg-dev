@@ -1,9 +1,10 @@
 # --- Part II ------------------------------------------------------------------
 
-#install.packages(c("devtools", "roxygen2", "usethis","fs"))
+#install.packages(c("devtools", "roxygen2", "testthat", "usethis"))
 require(usethis)
 require(roxygen2)
 require(devtools)
+require(testthat)
 
 # --- Preparation --------------------------------------------------------------
 
@@ -42,44 +43,10 @@ plusone(dat$y)
 # Save data in the package
 use_data(dat)
 
-# --- Example Data -------------------------------------------------------------
+# --- Documentation -------------------------------------------------------------
 
-# \name{add}
-# \alias{add}
-# \title{Add together two numbers}
-# \usage{ add(x, y) }
-# \arguments{
-#   \item{x}{A number}
-#   \item{y}{A number}
-# }
-# \value{
-#   The sum of \code{x} and \code{y}
-# }
-# \description{ Add together two numbers }
-# \examples{
-#   add(1, 1)
-#   add(10, 1)
-#
-#   data(dat)
-#   add(dat$x, dat$y)
-# }
-
-## roxygen2
-
-#' Add together two numbers.
-#'
-#' @param x A number.
-#' @param y A number.
-#' @return The sum of \code{x} and \code{y}.
-#' @examples
-#'   add(1, 1)
-#'   add(10, 1)
-#'
-#'   data(dat)
-#'   add(dat$x, dat$y)
-add <- function(x, y) {
-  x + y
-}
+# Add documentation to functions and data 
+# see 03_develop-package_add.R
 
 # Convert roxygen comments
 roxygenize()
@@ -87,6 +54,9 @@ roxygenize()
 ?add
 
 ### NAMESPACE
+
+# View namespace
+edit_file("NAMESPACE")
 
 # Add `@export` to roxygen comments
 #' @export
