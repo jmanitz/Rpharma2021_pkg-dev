@@ -31,6 +31,7 @@ plusone(4)
 # create and open R file, shortcut to open R files, ctrl + .
 use_r("math")
 
+
 # --- Example Data -------------------------------------------------------------
 
 # prepare some example data
@@ -66,6 +67,27 @@ roxygenize()
 
 # View namespace
 edit_file("NAMESPACE")
+
+### Data documentation
+
+# create and open R file, shortcut to open R files, ctrl + .
+use_r("dat")
+
+#' Example Dataset
+#'
+#' A datset containing example toy data
+#'
+#' @format A data frame with 257 observations and 29 variables:
+#' \describe{
+#'   \item{id}{integer, unique identifier}
+#'   \item{x}{character, random number}
+#'   \item{y}{character, random number}
+#' }
+#'
+#' @author Juliane Manitz
+#' @examples
+#' data(dat)
+"dat"
 
 # --- Unit Testing -------------------------------------------------------------
 

@@ -445,7 +445,7 @@ class: inverse
 ---
 # Write R functions
 
-- `R/` directory contains all R codehmm 
+- `R/` directory contains all R code
 - A package with just an `R/` directory is still a very useful package.
 
 --
@@ -538,7 +538,7 @@ Basic R package components:
 # Package Example Data 
 
 - The `data/` directory allows you to include data with your package.
-- distribute 
+- distribute data along with documentation 
 - If `DESCRIPTION` contains `LazyData: true`, then the datasets won't occupy any memory until you use them
 
 ### Store data in
